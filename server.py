@@ -1,4 +1,7 @@
-token = 'xoxb-39335427313-KW33hDhNjyV6jJjKbrw7Yuuv'
+fp = open('token','rb')
+token = fp.readline()
+fp.close()
+
 import time
 from slackclient import SlackClient
 import urlParser
