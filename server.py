@@ -4,8 +4,8 @@ fp.close()
 
 import time
 from slackclient import SlackClient
+from engineLayer import askTheMagicConch
 import urlParser
-from stateMachine import askTheMagicConch
 
 sc = SlackClient(token)
 if sc.rtm_connect():
