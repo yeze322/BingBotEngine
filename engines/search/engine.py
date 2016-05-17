@@ -15,17 +15,26 @@ def __urlCrawler(url):
     return urllib.urlopen(url).read()
 
 
-def Search(sentence):
-    kwlist = sentence.split(' ')
+def __search(question):
+    kwlist = question.split(' ')
     url = __getBingUrl(kwlist)
     text = __urlCrawler(url)
     
     ent = json.loads(text)
     topics = ent['Topics']
-    print type(topics)
     if topics:
         i = topics[0]
         Title = i['Title'].replace("<span class='highlight'>", "").replace("</span>", "")
         Summary = i['Summary'].replace("<span class='highlight'>", "").replace("</span>", "")
         url = __getSolutionUrl(i['SecretKey'],i['Nav'])
         return [Title, Summary, url]
+
+def Ask(question):
+    response = __search(question)
+    if response:
+        answer = "`Are you asking:` \n\t\t" + "*{0}*".format(response[0]) + '?\n'
+        answer += "`I know that...` \n\t" + response[1] + '\n'
+        answer += '`Please click this URL:` \n\t' + response[2] + '\n'
+    else:
+        answer = "Sorry, cannot answer this question."
+    return answer
